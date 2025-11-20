@@ -206,7 +206,7 @@ class Affichage {
         for (final transaction in transactions) {
           final cleanType = _cleanTransactionType(transaction.type);
           final recipient = await _getRecipientInfo(transaction);
-          print('${transaction.createdAt}: $cleanType - ${transaction.montant} XOF - $recipient');
+          print('${transaction.id}: ${transaction.createdAt}: $cleanType - ${transaction.montant} XOF - $recipient');
         }
       } else {
         print('Aucune transaction trouvée');
