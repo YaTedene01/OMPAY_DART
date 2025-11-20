@@ -70,7 +70,7 @@ class ApiService {
         }
       }
     } catch (e) {
-      // Ignore errors when loading token
+      
     }
   }
 
@@ -82,7 +82,7 @@ class ApiService {
       final tokenFile = File('$homeDir/$_tokenFileName');
       tokenFile.writeAsStringSync(_accessToken!);
     } catch (e) {
-      // Ignore errors when saving token
+      
     }
   }
 
@@ -96,11 +96,9 @@ class ApiService {
         tokenFile.deleteSync();
       }
     } catch (e) {
-      // Ignore errors when deleting token file
     }
   }
 
-  // Auth endpoints
   Future<Map<String, dynamic>> sendAuthLink(String phone) async {
     final response = await _dio.post('/api/auth/envoyer-lien', data: {'phone': phone});
     return response.data;
@@ -111,7 +109,6 @@ class ApiService {
     return response.data;
   }
 
-  // Account endpoints
   Future<Map<String, dynamic>> getDashboard() async {
     final response = await _dio.get('/api/compte/dashboard');
     return response.data;
@@ -143,7 +140,6 @@ class ApiService {
     return response.data;
   }
 
-  // Auth endpoints
   Future<Map<String, dynamic>> logout() async {
     final response = await _dio.post('/api/auth/logout');
     return response.data;

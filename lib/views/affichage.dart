@@ -243,7 +243,6 @@ class Affichage {
   }
 
   String _cleanTransactionType(String type) {
-    // Enlever "_debit" des types de transaction
     if (type.endsWith('_debit')) {
       return type.replaceAll('_debit', '');
     }
@@ -251,7 +250,6 @@ class Affichage {
   }
 
   Future<String> _getRecipientInfo(Transaction transaction) async {
-    // Pour les paiements QR, essayer d'extraire le code marchand des métadonnées
     if (transaction.type.startsWith('paiement') && transaction.metadata != null) {
       final meta = transaction.metadata!;
       if (meta.containsKey('code_marchand')) {
@@ -259,9 +257,7 @@ class Affichage {
       }
     }
 
-    // Pour les transferts, l'ID du compte destinataire
     if (transaction.type.startsWith('transfert') && transaction.counterparty != null) {
-      // Essayer de récupérer les informations du destinataire
       try {
         return await _compteService.getUserInfoByAccountId(transaction.counterparty!);
       } catch (e) {
@@ -269,7 +265,6 @@ class Affichage {
       }
     }
 
-    // Par défaut, retourner l'ID ou N/A
     return transaction.counterparty ?? 'N/A';
   }
 

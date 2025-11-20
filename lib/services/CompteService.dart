@@ -62,8 +62,7 @@ class CompteService {
 
   Future<String> getUserInfoByAccountId(String accountId) async {
     try {
-      // Pour l'instant, on retourne l'ID car on n'a pas d'endpoint spécifique
-      // Dans une vraie implémentation, on ferait un appel API pour récupérer les infos
+
       return accountId;
     } catch (e) {
       return 'Utilisateur inconnu';

@@ -27,15 +27,14 @@ class AuthService {
       _apiService.clearAccessToken();
       return response;
     } catch (e) {
-      // Même en cas d'erreur, on nettoie le token local
+      
       _apiService.clearAccessToken();
       rethrow;
     }
   }
 
   bool isAuthenticated() {
-    // We can't easily check token validity without making a request
-    // This is a simple check - in a real app you'd validate the token
+   
     return _apiService.accessToken != null;
   }
 }
