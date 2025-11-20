@@ -40,7 +40,7 @@ class CompteService {
     return await _apiService.transfer(data);
   }
 
-  Future<Map<String, dynamic>> payWithCode(String codeMarchand, double montant) async {
+  Future<Map<String, dynamic>> paiement(String codeMarchand, double montant) async {
     return await _apiService.payWithCode(codeMarchand, montant);
   }
 
@@ -56,16 +56,16 @@ class CompteService {
     return [];
   }
 
-  Future<Map<String, dynamic>> getBalance() async {
-    return await _apiService.getBalance();
+  Future<Map<String, dynamic>> getSolde() async {
+    return await _apiService.getSolde();
   }
 
   Future<String> getUserInfoByAccountId(String accountId) async {
     try {
-
       return accountId;
     } catch (e) {
       return 'Utilisateur inconnu';
     }
   }
+
 }

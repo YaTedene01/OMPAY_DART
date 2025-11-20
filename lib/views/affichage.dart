@@ -186,7 +186,7 @@ class Affichage {
   void _pay(String code, double amount) async {
     try {
       print('Paiement de $amount avec le code $code...');
-      final response = await _compteService.payWithCode(code, amount);
+      final response = await _compteService.paiement(code, amount);
       print('✅ ${response['message']}');
     } catch (e) {
       print('❌ Erreur: $e');
@@ -219,7 +219,7 @@ class Affichage {
   void _handleBalance() async {
     try {
       print('Récupération du solde...');
-      final response = await _compteService.getBalance();
+      final response = await _compteService.getSolde();
 
       if (response['status'] == true) {
         final data = response['data'];

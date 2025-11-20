@@ -135,7 +135,7 @@ class ApiService {
     return response.data;
   }
 
-  Future<Map<String, dynamic>> getBalance() async {
+  Future<Map<String, dynamic>> getSolde() async {
     final response = await _dio.get('/api/compte/solde');
     return response.data;
   }
