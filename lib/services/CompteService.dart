@@ -1,63 +1,47 @@
 import 'package:ompay_dart/core/api_service.dart';
-import 'package:ompay_dart/models/compte.dart';
-import 'package:ompay_dart/models/transaction.dart';
-import 'package:ompay_dart/models/user.dart';
-import 'package:ompay_dart/models/qr_code.dart';
+import 'package:ompay_dart/models/api/api_models.dart';
 
 class CompteService {
   final ApiService _apiService;
 
   CompteService(this._apiService);
 
-  Future<Map<String, dynamic>> getDashboard() async {
+  Future<DashboardResponse> getDashboard() async {
     final response = await _apiService.getDashboard();
-
-    if (response['status'] == true && response['data'] != null) {
-      final data = response['data'];
-
-      return {
-        'user': User.fromJson(data['user']),
-        'compte': Compte.fromJson(data['compte']),
-        'qr_code': QrCode.fromJson(data['qr_code']),
-        'recent_transactions': (data['recent_transactions'] as List)
-            .map((t) => Transaction.fromJson(t))
-            .toList(),
-      };
-    }
-
-    throw Exception('Erreur lors de la récupération du tableau de bord');
+    return DashboardResponse.fromJson(response['data']);
   }
 
-  Future<Map<String, dynamic>> transfer({
+  Future<TransferResponse> transfer({
     String? toPhone,
     String? toCompteId,
     required double montant,
   }) async {
-    final Map<String, dynamic> data = {'montant': montant};
-    if (toPhone != null) data['to_phone'] = toPhone;
-    if (toCompteId != null) data['to_compte_id'] = toCompteId;
-
-    return await _apiService.transfer(data);
+    final request = TransferRequest(
+      montant: montant,
+      toPhone: toPhone,
+      toCompteId: toCompteId,
+    );
+    final response = await _apiService.transfer(request);
+    return TransferResponse.fromJson(response);
   }
 
-  Future<Map<String, dynamic>> paiement(String codeMarchand, double montant) async {
-    return await _apiService.payWithCode(codeMarchand, montant);
+  Future<PaymentResponse> paiement(String codeMarchand, double montant) async {
+    final request = PaymentRequest(
+      codeMarchand: codeMarchand,
+      montant: montant,
+    );
+    final response = await _apiService.payWithCode(request);
+    return PaymentResponse.fromJson(response);
   }
 
-  Future<List<Transaction>> getTransactions({int perPage = 15, String? type}) async {
+  Future<TransactionListResponse> getTransactions({int perPage = 15, String? type}) async {
     final response = await _apiService.getTransactions(perPage: perPage, type: type);
-
-    if (response['status'] == true && response['data'] != null) {
-      return (response['data'] as List)
-          .map((t) => Transaction.fromJson(t))
-          .toList();
-    }
-
-    return [];
+    return TransactionListResponse.fromJson(response);
   }
 
-  Future<Map<String, dynamic>> getSolde() async {
-    return await _apiService.getSolde();
+  Future<SoldeResponse> getSolde() async {
+    final response = await _apiService.getSolde();
+    return SoldeResponse.fromJson(response);
   }
 
   Future<String> getUserInfoByAccountId(String accountId) async {

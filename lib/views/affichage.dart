@@ -90,9 +90,9 @@ class Affichage {
     try {
       print('Envoi du lien d\'authentification à $phone...');
       final response = await _authService.sendAuthLink(phone);
-      print('✅ ${response['message']}');
-      print('Token: ${response['data']['token']}');
-      print('Expire dans: ${response['data']['expires_in']} secondes');
+      print('✅ ${response.message}');
+      print('Token: ${response.token}');
+      print('Expire dans: ${response.expiresIn} secondes');
     } catch (e) {
       print('❌ Erreur: $e');
     }
@@ -102,7 +102,7 @@ class Affichage {
     try {
       print('Échange du token...');
       final response = await _authService.exchangeToken(token);
-      print('✅ ${response['message']}');
+      print('✅ Authentification réussie');
     } catch (e) {
       print('❌ Erreur: $e');
     }
@@ -113,21 +113,16 @@ class Affichage {
       print('Récupération du tableau de bord...');
       final dashboard = await _compteService.getDashboard();
 
-      final user = dashboard['user'] as User;
-      final compte = dashboard['compte'] as Compte;
-      final qrCode = dashboard['qr_code'];
-      final transactions = dashboard['recent_transactions'] as List<Transaction>;
-
       print('');
       print('=== TABLEAU DE BORD ===');
-      print('Utilisateur: ${user.name ?? 'N/A'} (${user.phone})');
-      print('Solde: ${compte.solde} ${compte.devise}');
-      print('QR Code: ${qrCode.code}');
+      print('Utilisateur: ${dashboard.user.name ?? 'N/A'} (${dashboard.user.phone})');
+      print('Solde: ${dashboard.compte.solde} ${dashboard.compte.devise}');
+      print('QR Code: ${dashboard.qrCode.code}');
       print('');
-      if (transactions.isNotEmpty) {
+      if (dashboard.recentTransactions.isNotEmpty) {
         print('Transactions récentes:');
-        for (final transaction in transactions) {
-          print('  ${transaction.type}: ${transaction.montant} ${compte.devise} - ${transaction.status}');
+        for (final transaction in dashboard.recentTransactions) {
+          print('  ${transaction.type}: ${transaction.montant} ${dashboard.compte.devise} - ${transaction.status}');
         }
       } else {
         print('Aucune transaction récente');
@@ -159,7 +154,7 @@ class Affichage {
     try {
       print('Transfert de $amount vers $phone...');
       final response = await _compteService.transfer(toPhone: phone, montant: amount);
-      print('✅ ${response['message']}');
+      print('✅ Transfert effectué');
     } catch (e) {
       print('❌ Erreur: $e');
     }
@@ -187,7 +182,7 @@ class Affichage {
     try {
       print('Paiement de $amount avec le code $code...');
       final response = await _compteService.paiement(code, amount);
-      print('✅ ${response['message']}');
+      print('✅ Paiement effectué');
     } catch (e) {
       print('❌ Erreur: $e');
     }
@@ -198,12 +193,12 @@ class Affichage {
 
     try {
       print('Récupération des transactions...');
-      final transactions = await _compteService.getTransactions(type: type);
+      final response = await _compteService.getTransactions(type: type);
 
       print('');
       print('=== TRANSACTIONS ===');
-      if (transactions.isNotEmpty) {
-        for (final transaction in transactions) {
+      if (response.data.isNotEmpty) {
+        for (final transaction in response.data) {
           final cleanType = _cleanTransactionType(transaction.type);
           final recipient = await _getRecipientInfo(transaction);
           print('${transaction.id}: ${transaction.createdAt}: $cleanType - ${transaction.montant} XOF - $recipient');
@@ -221,11 +216,8 @@ class Affichage {
       print('Récupération du solde...');
       final response = await _compteService.getSolde();
 
-      if (response['status'] == true) {
-        final data = response['data'];
-        print('Solde: ${data['solde']} ${data['devise']}');
-        print('Dernière mise à jour: ${data['dernier_maj']}');
-      }
+      print('Solde: ${response.solde} ${response.devise}');
+      print('Dernière mise à jour: ${response.dernierMaj}');
     } catch (e) {
       print('❌ Erreur: $e');
     }
@@ -235,7 +227,7 @@ class Affichage {
     try {
       print('Déconnexion...');
       final response = await _authService.logout();
-      print('✅ ${response['message'] ?? 'Déconnexion réussie'}');
+      print('✅ ${response.message}');
     } catch (e) {
       print('❌ Erreur lors de la déconnexion: $e');
       print('✅ Token local nettoyé');

@@ -22,15 +22,31 @@ cd ompay_dart
 
 # Installer les dépendances
 dart pub get
+
+# Configurer l'environnement
+cp .env.example .env
+# Éditez le fichier .env selon vos besoins
 ```
 
 ## Configuration
 
-L'application est configurée pour utiliser l'API de production OMPAY. Si vous souhaitez utiliser un autre environnement, modifiez l'URL dans `bin/ompay_dart.dart` :
+L'application utilise un fichier `.env` pour la configuration. Copiez le fichier d'exemple et modifiez-le selon vos besoins :
 
-```dart
-const baseUrl = 'https://votre-api-url.com';
+```bash
+cp .env.example .env
 ```
+
+### Variables d'environnement
+
+- `API_BASE_URL` : URL de base de l'API OMPAY (par défaut : `https://ompay-wex1.onrender.com`)
+
+### Exemple de fichier .env
+
+```env
+API_BASE_URL=https://ompay-wex1.onrender.com
+```
+
+**⚠️ Important :** Le fichier `.env` est ignoré par Git pour des raisons de sécurité. Ne commitez jamais de vraies clés API.
 
 ## Utilisation
 

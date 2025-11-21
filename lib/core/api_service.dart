@@ -99,13 +99,15 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> sendAuthLink(String phone) async {
-    final response = await _dio.post('/api/auth/envoyer-lien', data: {'phone': phone});
+  Future<Map<String, dynamic>> sendAuthLink(dynamic request) async {
+    final data = request is Map<String, dynamic> ? request : request.toJson();
+    final response = await _dio.post('/api/auth/envoyer-lien', data: data);
     return response.data;
   }
 
-  Future<Map<String, dynamic>> exchangeToken(String tempToken) async {
-    final response = await _dio.post('/api/auth/echange', data: {'temp_token': tempToken});
+  Future<Map<String, dynamic>> exchangeToken(dynamic request) async {
+    final data = request is Map<String, dynamic> ? request : request.toJson();
+    final response = await _dio.post('/api/auth/echange', data: data);
     return response.data;
   }
 
@@ -114,16 +116,15 @@ class ApiService {
     return response.data;
   }
 
-  Future<Map<String, dynamic>> transfer(Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> transfer(dynamic request) async {
+    final data = request is Map<String, dynamic> ? request : request.toJson();
     final response = await _dio.post('/api/compte/transfert', data: data);
     return response.data;
   }
 
-  Future<Map<String, dynamic>> payWithCode(String codeMarchand, double montant) async {
-    final response = await _dio.post('/api/compte/paiement', data: {
-      'code_marchand': codeMarchand,
-      'montant': montant,
-    });
+  Future<Map<String, dynamic>> payWithCode(dynamic request) async {
+    final data = request is Map<String, dynamic> ? request : request.toJson();
+    final response = await _dio.post('/api/compte/paiement', data: data);
     return response.data;
   }
 
