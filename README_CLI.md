@@ -152,14 +152,9 @@ L'application suit une architecture modulaire :
 
 ## Dépendances
 
-### Dépendances principales
-- **`dio: ^5.4.0`** : Client HTTP puissant et flexible pour les appels API REST, avec support des intercepteurs et gestion d'erreurs avancée
-- **`get_it: ^9.0.5`** : Bibliothèque d'injection de dépendances légère et performante pour la gestion des services
-- **`dotenv: ^4.2.0`** : Gestionnaire de variables d'environnement pour la configuration sécurisée de l'application
-
-### Dépendances de développement
-- **`lints: ^6.0.0`** : Ensemble de règles de linting pour maintenir la qualité du code Dart
-- **`test: ^1.25.6`** : Framework de test unitaire pour Dart
+- `dio` : Client HTTP pour les appels API
+- `get_it` : Injection de dépendances
+- `http` : Support HTTP (utilisé par Dio)
 
 ## API Endpoints
 
