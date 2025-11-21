@@ -113,6 +113,43 @@ L'application suit une architecture modulaire :
 - `lib/core/` : Services core (API, CLI, messages, injection de dépendances)
 - `lib/services/` : Services métier (AuthService, CompteService)
 
+## Technologies utilisées
+
+### Langage de programmation
+- **Dart** : Langage de programmation moderne développé par Google, optimisé pour le développement d'applications multiplateformes
+
+### Frameworks et bibliothèques
+- **Dart SDK** : Kit de développement Dart (version 3.10.0+)
+- **Dio** : Client HTTP puissant pour les appels API REST (v5.4.0)
+- **GetIt** : Bibliothèque d'injection de dépendances légère (v9.0.5)
+- **DotEnv** : Gestionnaire de variables d'environnement (v4.2.0)
+
+### Architecture logicielle
+- **Clean Architecture** : Séparation claire des responsabilités
+- **Repository Pattern** : Abstraction des sources de données
+- **Dependency Injection** : Gestion des dépendances avec GetIt
+- **SOLID Principles** : Principes de conception orientée objet
+
+### Gestion de projet
+- **Pub** : Gestionnaire de paquets Dart
+- **Git** : Contrôle de version
+- **GitHub** : Hébergement du code source
+
+### Sécurité
+- **JWT Tokens** : Authentification basée sur des tokens JSON Web
+- **HTTPS** : Communication sécurisée avec l'API
+- **Environment Variables** : Configuration sécurisée via fichier .env
+
+### Développement
+- **VS Code** : Éditeur de code recommandé
+- **Dart Analysis** : Outil d'analyse statique du code
+- **Linting** : Respect des bonnes pratiques de code
+
+### API et protocoles
+- **REST API** : Architecture d'API RESTful
+- **JSON** : Format d'échange de données
+- **OAuth 2.0** : Protocole d'autorisation (Passport)
+
 ## Dépendances
 
 - `dio` : Client HTTP pour les appels API
