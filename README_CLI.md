@@ -11,25 +11,9 @@ Une application CLI Dart pour interagir avec l'API OMPAY, une plateforme de paie
 - 📊 Consultation du solde et des transactions
 - 📱 Tableau de bord complet
 
-## Prérequis système
-
-Avant d'installer l'application, assurez-vous d'avoir les éléments suivants :
-
-### Logiciels requis
-- **Dart SDK** : Version 3.10.0 ou supérieure
-- **Git** : Pour cloner le repository
-- **Terminal/Console** : Pour exécuter les commandes CLI
-
-### Vérification de l'installation
-```bash
-# Vérifier la version de Dart
-dart --version
-
-# Vérifier que pub est disponible
-dart pub --version
-```
-
 ## Installation
+
+Assurez-vous d'avoir Dart installé sur votre système.
 
 ```bash
 # Cloner le repository
