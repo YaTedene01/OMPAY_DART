@@ -1,25 +1,26 @@
 import 'package:ompay_dart/core/api_service.dart';
-import 'package:ompay_dart/models/api/api_models.dart';
+import 'package:ompay_dart/models/api/auth_requests.dart';
+import 'package:ompay_dart/models/api/auth_responses.dart';
 
 class AuthService {
   final ApiService _apiService;
 
   AuthService(this._apiService);
 
-  Future<SendAuthLinkResponse> sendAuthLink(String phone) async {
-    final request = SendAuthLinkRequest(phone: phone);
-    final response = await _apiService.sendAuthLink(request);
-    return SendAuthLinkResponse.fromJson(response);
+  Future<SendOtpResponse> sendOtp(String phone) async {
+    final request = SendOtpRequest(phone: phone);
+    final response = await _apiService.sendOtp(request);
+    return SendOtpResponse.fromJson(response);
   }
 
-  Future<ExchangeTokenResponse> exchangeToken(String tempToken) async {
-    final request = ExchangeTokenRequest(tempToken: tempToken);
-    final response = await _apiService.exchangeToken(request);
+  Future<VerifyOtpResponse> verifyOtp(String otp) async {
+    final request = VerifyOtpRequest(otp: otp);
+    final response = await _apiService.verifyOtp(request);
 
     if (response['status'] == true && response['data'] != null) {
       final accessToken = response['data']['access_token'];
       _apiService.setAccessToken(accessToken);
-      return ExchangeTokenResponse.fromJson(response);
+      return VerifyOtpResponse.fromJson(response);
     }
 
     throw Exception('Échec de l\'authentification');

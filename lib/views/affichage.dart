@@ -53,8 +53,8 @@ class Affichage {
     print('Usage: dart run bin/ompay_dart.dart <command> [arguments]');
     print('');
     print('Commands:');
-    print(' 1- auth <phone>           Envoyer un lien d\'authentification');
-    print(' 2- auth echange <token>   Échanger un token temporaire');
+    print(' 1- auth <phone>           Envoyer un code OTP d\'authentification');
+    print(' 2- auth verify <otp>      Vérifier le code OTP');
     print(' 3- dashboard              Afficher le tableau de bord');
     print(' 4- transfer <phone> <montant>  Transférer de l\'argent');
     print(' 5- paiement <code> <montant>   Payer avec un code marchand');
@@ -65,43 +65,41 @@ class Affichage {
     print('');
     print('Examples:');
     print('  dart run bin/ompay_dart.dart auth 771234567');
-    print('  dart run bin/ompay_dart.dart auth echange abc123...');
+    print('  dart run bin/ompay_dart.dart auth verify 1234');
     print('  dart run bin/ompay_dart.dart transfer 771234567 50.0');
   }
 
   void _handleAuth(List<String> args) {
     if (args.isEmpty) {
       print('Erreur: numéro de téléphone requis');
-      print('Usage: auth <phone>');
+      print('Usage: auth <phone> ou auth verify <otp>');
       return;
     }
 
-    if (args.length == 2 && args[0] == 'echange') {
-      final token = args[1];
-      _exchangeToken(token);
+    if (args.length == 2 && args[0] == 'verify') {
+      final otp = args[1];
+      _verifyOtp(otp);
       return;
     }
 
     final phone = args[0];
-    _sendAuthLink(phone);
+    _sendOtp(phone);
   }
 
-  void _sendAuthLink(String phone) async {
+  void _sendOtp(String phone) async {
     try {
-      print('Envoi du lien d\'authentification à $phone...');
-      final response = await _authService.sendAuthLink(phone);
+      print('Envoi du code OTP à $phone...');
+      final response = await _authService.sendOtp(phone);
       print('✅ ${response.message}');
-      print('Token: ${response.token}');
-      print('Expire dans: ${response.expiresIn} secondes');
     } catch (e) {
       print('❌ Erreur: $e');
     }
   }
 
-  void _exchangeToken(String token) async {
+  void _verifyOtp(String otp) async {
     try {
-      print('Échange du token...');
-      final response = await _authService.exchangeToken(token);
+      print('Vérification du code OTP...');
+      final response = await _authService.verifyOtp(otp);
       print('✅ Authentification réussie');
     } catch (e) {
       print('❌ Erreur: $e');

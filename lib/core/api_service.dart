@@ -99,15 +99,15 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> sendAuthLink(dynamic request) async {
+  Future<Map<String, dynamic>> sendOtp(dynamic request) async {
     final data = request is Map<String, dynamic> ? request : request.toJson();
-    final response = await _dio.post('/api/auth/envoyer-lien', data: data);
+    final response = await _dio.post('/api/auth/send-otp', data: data);
     return response.data;
   }
 
-  Future<Map<String, dynamic>> exchangeToken(dynamic request) async {
+  Future<Map<String, dynamic>> verifyOtp(dynamic request) async {
     final data = request is Map<String, dynamic> ? request : request.toJson();
-    final response = await _dio.post('/api/auth/echange', data: data);
+    final response = await _dio.post('/api/auth/verify-otp', data: data);
     return response.data;
   }
 

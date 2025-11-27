@@ -1,34 +1,26 @@
-class SendAuthLinkResponse {
-  final String token;
-  final int expiresIn;
+class SendOtpResponse {
   final String message;
 
-  SendAuthLinkResponse({
-    required this.token,
-    required this.expiresIn,
-    required this.message,
-  });
+  SendOtpResponse({required this.message});
 
-  factory SendAuthLinkResponse.fromJson(Map<String, dynamic> json) {
-    return SendAuthLinkResponse(
-      token: json['data']['token'],
-      expiresIn: json['data']['expires_in'],
-      message: json['data']['message'],
+  factory SendOtpResponse.fromJson(Map<String, dynamic> json) {
+    return SendOtpResponse(
+      message: json['message'] ?? 'Code OTP envoyé par SMS',
     );
   }
 }
 
-class ExchangeTokenResponse {
+class VerifyOtpResponse {
   final String accessToken;
   final String tokenType;
 
-  ExchangeTokenResponse({
+  VerifyOtpResponse({
     required this.accessToken,
     required this.tokenType,
   });
 
-  factory ExchangeTokenResponse.fromJson(Map<String, dynamic> json) {
-    return ExchangeTokenResponse(
+  factory VerifyOtpResponse.fromJson(Map<String, dynamic> json) {
+    return VerifyOtpResponse(
       accessToken: json['data']['access_token'],
       tokenType: json['data']['token_type'],
     );

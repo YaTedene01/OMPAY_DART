@@ -1,19 +1,19 @@
-class SendAuthLinkRequest {
+class SendOtpRequest {
   final String phone;
 
-  SendAuthLinkRequest({required this.phone});
+  SendOtpRequest({required this.phone});
 
   Map<String, dynamic> toJson() {
     return {'phone': phone};
   }
 }
 
-class ExchangeTokenRequest {
-  final String tempToken;
+class VerifyOtpRequest {
+  final String otp;
 
-  ExchangeTokenRequest({required this.tempToken});
+  VerifyOtpRequest({required this.otp});
 
   Map<String, dynamic> toJson() {
-    return {'temp_token': tempToken};
+    return {'otp': otp};
   }
 }
